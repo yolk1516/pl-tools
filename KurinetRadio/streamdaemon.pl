@@ -3,17 +3,17 @@
 # icesdaemon
 $ver = "1.0.2-050112";
 
-# í’“ƒvƒƒOƒ‰ƒ€‘S”Ê‚Ì”z’uêŠ
+# å¸¸é§ãƒ—ãƒ­ã‚°ãƒ©ãƒ å…¨èˆ¬ã®é…ç½®å ´æ‰€
 $ROOT_DIR = "/home/two/stream/";
 
-# ƒŠƒNƒGƒXƒg‚µ‚Ä‚©‚çƒZƒbƒg‚·‚é‚Ü‚Å‚ÌŠÔ
+# ãƒªã‚¯ã‚¨ã‚¹ãƒˆã—ã¦ã‹ã‚‰ã‚»ãƒƒãƒˆã™ã‚‹ã¾ã§ã®æ™‚é–“
 $REQUEST_TIME = 60*10;
 
-# í’“¨§Œä‚Ìˆ—‚Ì‚â‚è‚Æ‚è‚ğˆµ‚¤ƒtƒ@ƒCƒ‹
+# å¸¸é§â†’åˆ¶å¾¡ã®å‡¦ç†ã®ã‚„ã‚Šã¨ã‚Šã‚’æ‰±ã†ãƒ•ã‚¡ã‚¤ãƒ«
 $ACT_ROOT_FILE = $ROOT_DIR."actRoot.dat";
-# í’“©§Œä‚Ìˆ—‚Ì‚â‚è‚Æ‚è‚ğˆµ‚¤ƒtƒ@ƒCƒ‹
+# å¸¸é§â†åˆ¶å¾¡ã®å‡¦ç†ã®ã‚„ã‚Šã¨ã‚Šã‚’æ‰±ã†ãƒ•ã‚¡ã‚¤ãƒ«
 $ACT_EXEC_FILE = $ROOT_DIR."actExec.dat";
-# ì‹Æ‹L˜^‚ğ‘‚«o‚·ƒtƒ@ƒCƒ‹
+# ä½œæ¥­è¨˜éŒ²ã‚’æ›¸ãå‡ºã™ãƒ•ã‚¡ã‚¤ãƒ«
 $LOG_FILE = $ROOT_DIR."work.log";
 
 log_write("[[icesdaemon $ver started]]");
@@ -86,7 +86,7 @@ sub DB_request{
 	my $DB_NAME = 'ices_db';
 	my $DB_HOSTNAME = 'localhost';
 	my $DB_USER = 'root';
-	my $DB_PASSWORD = 'kurimura';
+	my $DB_PASSWORD = '***';
 	my $R = $_[0];
 	my $RT = $_[1];
 
@@ -140,7 +140,7 @@ sub DB_clear_record{
 	my $DB_NAME = 'ices_db';
 	my $DB_HOSTNAME = 'localhost';
 	my $DB_USER = 'root';
-	my $DB_PASSWORD = 'kurimura';
+	my $DB_PASSWORD = '***';
 	my $id = $_[0];
 	
 	use DBI;
@@ -167,7 +167,7 @@ sub DB_information{
 	my $DB_NAME = 'ices_db';
 	my $DB_HOSTNAME = 'localhost';
 	my $DB_USER = 'root';
-	my $DB_PASSWORD = 'kurimura';
+	my $DB_PASSWORD = '***';
 	my $id = $_[0];
 	my $r = $_[1];
 	my $rt = $_[2];
@@ -212,7 +212,7 @@ sub DB_musiclist_gen_daemon{
 	my $DB_NAME = 'ices_db';
 	my $DB_HOSTNAME = 'localhost';
 	my $DB_USER = 'root';
-	my $DB_PASSWORD = 'kurimura';
+	my $DB_PASSWORD = '***';
 	
 	use DBI;
 	use Jcode;
@@ -228,7 +228,7 @@ sub DB_musiclist_gen_daemon{
 		return 0;
 	}
 	
-	# ƒf[ƒ^ƒx[ƒX‚Ìmusiclist‚ğíœ‚·‚é
+	# ãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹ã®musiclistã‚’å‰Šé™¤ã™ã‚‹
 	my $statement= "delete from musiclist";
 	my $result=$dbh->do($statement);
 	unless($result){ 
@@ -236,7 +236,7 @@ sub DB_musiclist_gen_daemon{
 		return 0; 
 	}
 	
-	# mp3‚ÌƒŠƒXƒg‚ğì‚é(ƒ^ƒO‚à’Šo)
+	# mp3ã®ãƒªã‚¹ãƒˆã‚’ä½œã‚‹(ã‚¿ã‚°ã‚‚æŠ½å‡º)
 	my $LIST = `find /usr/local/pub/g/mp3/ -name *.mp3 -print`;
 	my @filelist = split(/\n/,$LIST);
 	my $c = 0;
@@ -276,7 +276,7 @@ sub DB_musiclist_gen_daemon{
 	return 1;
 }
 
-# ƒRƒ}ƒ“ƒhƒ`ƒFƒbƒN
+# ã‚³ãƒãƒ³ãƒ‰ãƒã‚§ãƒƒã‚¯
 sub read_command{
 	my @tmp;
 	open(DATA,"+< $ACT_EXEC_FILE") || die "$ACT_EXEC_FILE open err.";
@@ -290,7 +290,7 @@ sub read_command{
 	return @tmp;
 }
 
-# ƒƒO‘‚«o‚µ
+# ãƒ­ã‚°æ›¸ãå‡ºã—
 sub log_write{
 	my $line = $_[0];
 	my @tmp_time = &getDate(time);
