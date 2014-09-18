@@ -15,7 +15,7 @@ sub ices_shutdown {
 	my $DB_NAME = 'ices_db';
 	my $DB_HOSTNAME = 'localhost';
 	my $DB_USER = 'root';
-	my $DB_PASSWORD = 'kurimura';
+	my $DB_PASSWORD = '***';
 	
 	use DBI;
 #	use Jcode;
@@ -26,7 +26,7 @@ sub ices_shutdown {
 
 	my $kankyo = DB_kankyo_load($dbh);
 
-	# ¡‚Ü‚Å‚©‚¯‚Ä‚½‹È‚ğŸ‰ñ‹N“®‚ÉÄ¶‚·‚é
+	# ä»Šã¾ã§ã‹ã‘ã¦ãŸæ›²ã‚’æ¬¡å›èµ·å‹•æ™‚ã«å†ç”Ÿã™ã‚‹
 	DB_excute($dbh, "update playlist SET played=1 where no=$kankyo->{'playnum'}");
 	$tmp = $kankyo->{'playnum'} - 1;
 	DB_excute($dbh,"update kankyo SET num=$tmp where name='playnum'");
@@ -41,7 +41,7 @@ sub ices_get_next {
 	my $DB_NAME = 'ices_db';
 	my $DB_HOSTNAME = 'localhost';
 	my $DB_USER = 'root';
-	my $DB_PASSWORD = 'kurimura';
+	my $DB_PASSWORD = '***';
 	
 	use DBI;
 #	use Jcode;
@@ -57,14 +57,14 @@ sub ices_get_next {
 	my $source;
 #	print $kankyo->{'playmode'};
 	
-	if($kankyo->{'playmode'} == 6){		# 1‹È‘I‘ğƒ‚[ƒh
+	if($kankyo->{'playmode'} == 6){		# 1æ›²é¸æŠãƒ¢ãƒ¼ãƒ‰
 		my $DATA = DB_data_load($dbh, $kankyo->{'order'}, 2);
 		$source = $DATA->{'filepath'};
-		# mysqlƒf[ƒ^ŠÂ‹«‚ğXV‚·‚é
+		# mysqlãƒ‡ãƒ¼ã‚¿ç’°å¢ƒã‚’æ›´æ–°ã™ã‚‹
 		DB_excute($dbh,"update kankyo SET num=$kankyo->{'backmode'} where name='playmode'");
 		DB_excute($dbh,"update kankyo SET num=NULL where name='backmode'");
 		DB_excute($dbh,"insert into record (id) values ($kankyo->{'order'})");
-	}elsif($kankyo->{'playmode'} == 7){	# ’Ç‰ÁÄ¶ƒ‚[ƒh
+	}elsif($kankyo->{'playmode'} == 7){	# éšæ™‚è¿½åŠ å†ç”Ÿãƒ¢ãƒ¼ãƒ‰
 		my @musiclist;
 		unless(search_mp3(\@musiclist, 4)){
 			print "opendir failed.\n";
@@ -86,7 +86,7 @@ sub ices_get_next {
 			}
 			print $source;
 		}
-	}else{								# ‚»‚Ì‘¼ƒ‚[ƒh
+	}else{								# ãã®ä»–ãƒ¢ãƒ¼ãƒ‰
 		if($kankyo->{'artist'} || $kankyo->{'mname'}){
 			DB_excute($dbh,"update kankyo SET num=NULL where name='order'");
 			DB_excute($dbh,"update kankyo SET value=NULL where name='mname'");
@@ -105,7 +105,7 @@ sub ices_get_metadata {
 	my $DB_NAME = 'ices_db';
 	my $DB_HOSTNAME = 'localhost';
 	my $DB_USER = 'root';
-	my $DB_PASSWORD = 'kurimura';
+	my $DB_PASSWORD = '***';
 	
 	use DBI;
 	use Jcode;
@@ -325,13 +325,13 @@ sub DB_music_load{
 	my $reset = 0;
 	my $count = 1;
 
-	if($playmode >= 1 && $playmode <= 4){		# ‘S•”ƒCƒbƒ`ƒƒƒEƒˆ(random)
-												# ‘S•”ƒCƒbƒ`ƒƒƒEƒˆ(random)radio
-												# ƒvƒŒƒCƒŠƒXƒg(random)
-												# ƒvƒŒƒCƒŠƒXƒg(random)radio
+	if($playmode >= 1 && $playmode <= 4){		# å…¨éƒ¨ã‚¤ãƒƒãƒãƒ£ã‚¦ãƒ¨(random)
+												# å…¨éƒ¨ã‚¤ãƒƒãƒãƒ£ã‚¦ãƒ¨(random)radio
+												# ãƒ—ãƒ¬ã‚¤ãƒªã‚¹ãƒˆ(random)
+												# ãƒ—ãƒ¬ã‚¤ãƒªã‚¹ãƒˆ(random)radio
 		$sth = $dbh->prepare("select no,filepath,playlist.id from playlist left join musiclist on playlist.id=musiclist.id where playlist.played=1 order by rand() limit 1");
 		$sth2 = $dbh->prepare("select no,filepath,playlist.id from playlist left join musiclist on playlist.id=musiclist.id order by rand() limit 1");
-	}elsif($playmode == 5){						# ƒvƒŒƒCƒŠƒXƒg
+	}elsif($playmode == 5){						# ãƒ—ãƒ¬ã‚¤ãƒªã‚¹ãƒˆ
 		if($playno > $kankyo->{'playmax'}){
 			$playno = 1;
 		}
@@ -340,7 +340,7 @@ sub DB_music_load{
 	}else{
 		return 0;
 	}
-	# mysqlƒf[ƒ^‚©‚çƒtƒ@ƒCƒ‹ƒpƒX‚ğ’Šo
+	# mysqlãƒ‡ãƒ¼ã‚¿ã‹ã‚‰ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹ã‚’æŠ½å‡º
 	my $result=$sth->execute();
 	if($sth->rows == 0){
 		$result=$sth2->execute();
@@ -363,14 +363,14 @@ sub DB_music_load{
 		last;
 	}
 	
-	# mysqlƒf[ƒ^‚ÉƒvƒŒƒCÏ‚Æ‹Lq‚·‚é
+	# mysqlãƒ‡ãƒ¼ã‚¿ã«ãƒ—ãƒ¬ã‚¤æ¸ˆã¨è¨˜è¿°ã™ã‚‹
 	if($reset > 0){
 		DB_excute($dbh, "update playlist SET played=1 where no<>$no");
 	}else{
 		DB_excute($dbh, "update playlist SET played=2 where no=$no");
 	}
 	
-	# mysqlƒf[ƒ^ŠÂ‹«‚ğXV‚·‚é
+	# mysqlãƒ‡ãƒ¼ã‚¿ç’°å¢ƒã‚’æ›´æ–°ã™ã‚‹
 	DB_excute($dbh,"update kankyo SET num=$no where name='playnum'");
 	DB_excute($dbh,"insert into record (id) values ($id)");
 	
